@@ -2,8 +2,8 @@ import { newArrayIntQueue } from "../src/arrayqueue";
 import { newLinkedListIntQueue } from "../src/linkedlistqueue.js";
 
 // pick one queue implementation, can run test easily for both, due to subtype polymorphism
-let createQueue = newLinkedListIntQueue
-// let createQueue = newArrayIntQueue
+// let createQueue = newLinkedListIntQueue
+ let createQueue = newArrayIntQueue
 
 // TODOs:
 // write more test cases to test dequeue and clear functions.
@@ -27,7 +27,7 @@ test("test peek: queue with 2 element should peek the one that was most recently
     const queue = createQueue()
     queue.enqueue(2)
     queue.enqueue(3)
-    expect(queue.peek()).toEqual(3)
+    expect(queue.peek()).toEqual(2)
 })
 
 let param = [5, 10, 1000000]
@@ -52,4 +52,30 @@ describe("test size: ", ()=> {
             queue.enqueue(i)
         expect(queue.size()).toBe(11)
     })
+})
+
+test("test clear: newly created list after cleared should be null", () => {
+    const queue = createQueue()
+    for (let i =0;i<11;i++)
+        queue.enqueue(i)
+    queue.clear()
+    expect(queue.size()).toBe(0)
+})
+
+test("test dequeue: dequeued number %d is correct", () => {
+    const queue = createQueue()
+    queue.enqueue(1)
+    queue.dequeue()
+    queue.dequeue()
+    expect(queue.size()).toBe(0)
+})
+
+test("test ensureCapacity: the second loop", () => {
+    const queue = createQueue()
+    for (let i =0;i<10;i++)
+        queue.enqueue(i)
+    queue.dequeue()
+    queue.enqueue(1)
+    queue.enqueue(1)
+    expect(queue.size()).toBe(11)
 })
